@@ -59,9 +59,9 @@ export default function Header({ lang, setLang, t }) {
 
             <div className="brand-separator" />
 
-            {/* Truck Asia Leasing Logo */}
+            {/* Truck Asia Logo */}
             <div className="brand-item tal-brand">
-              <img src="/tal_top.png" alt="Truck Asia Leasing" className="logo-img tal-logo" />
+              <img src="/tal_top.png" alt="Truck Asia" className="logo-img tal-logo" />
             </div>
           </div>
 

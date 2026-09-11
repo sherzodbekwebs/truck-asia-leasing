@@ -104,7 +104,7 @@ export default function LeadForm({ lang, t, preselectedProduct }) {
       : 'Barcha modellar bo‘yicha maslahat'
 
     const text =
-      `🚚 Yangi ariza — JAC / Truck Asia Leasing\n` +
+      `🚚 Yangi ariza — JAC / 13 oyga 0% Foizsiz muddatli to‘lov\n` +
       `🌐 Til: ${lang.toUpperCase()}\n` +
       `🚗 Tanlangan model: ${modelName}\n` +
       `👤 Ism: ${name.trim()}\n` +

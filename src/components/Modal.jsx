@@ -224,7 +224,7 @@ export default function Modal({ type, product, lang = 'uz', t, onClose, onOrder 
           <div className="footer-callout">
             <Phone size={14} />
             <span>
-              {lang === 'ru' ? 'Консультация эксперта по лизингу:' : 'Lizing bo‘yicha bepul maslahat:'}{' '}
+              {lang === 'ru' ? 'Консультация эксперта по рассрочке (0%):' : 'Muddatli to‘lov (0%) bo‘yicha bepul maslahat:'}{' '}
               <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
             </span>
           </div>

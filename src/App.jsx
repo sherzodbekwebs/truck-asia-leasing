@@ -136,9 +136,8 @@ export default function App() {
               <div className="footer-logos">
                 <img src="/jac.png" alt="JAC Motors" className="footer-logo jac" />
                 <div className="footer-logo-divider" />
-                <img src="/tal.png" alt="Truck Asia Leasing" className="footer-logo tal" />
+                <img src="/tal.png" alt="Truck Asia" className="footer-logo tal" />
               </div>
-              <p className="footer-brand-text">{t.footer.copyright}</p>
             </div>
 
             <div className="footer-contact-block">
@@ -147,13 +146,12 @@ export default function App() {
                 <Phone size={16} />
                 {PHONE_DISPLAY}
               </a>
-              <span className="footer-hours">{t.topBar.workHours}</span>
             </div>
           </div>
 
           <div className="footer-bottom-row">
             <p className="footer-legal">
-              &copy; {new Date().getFullYear()} Truck Asia Leasing &middot; {t.footer.allRights}
+              &copy; {new Date().getFullYear()} Truck Asia &middot; {t.footer.allRights}
             </p>
             <div className="footer-tags">
               <span className="legal-tag">
