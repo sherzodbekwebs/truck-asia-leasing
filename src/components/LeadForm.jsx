@@ -6,9 +6,39 @@ import { PRODUCTS_CONFIG } from '../data/products.js'
 const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
 const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID
 
+const formatUzPhone = (val) => {
+  // Only extract numeric digits
+  let digits = val.replace(/\D/g, '')
+
+  // If user enters/pastes numbers that start with 998, strip the country code
+  if (digits.startsWith('998')) {
+    digits = digits.slice(3)
+  }
+
+  // Allow up to 9 digits for Uzbekistan mobile/landline numbers
+  digits = digits.slice(0, 9)
+
+  let formatted = '+998'
+  if (digits.length > 0) {
+    formatted += ' ' + digits.slice(0, 2)
+  }
+  if (digits.length > 2) {
+    formatted += ' ' + digits.slice(2, 5)
+  }
+  if (digits.length > 5) {
+    formatted += ' ' + digits.slice(5, 7)
+  }
+  if (digits.length > 7) {
+    formatted += ' ' + digits.slice(7, 9)
+  }
+
+  return formatted
+}
+
 export default function LeadForm({ lang, t, preselectedProduct }) {
   const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState('+998 ')
+  const [phoneError, setPhoneError] = useState(false)
   const [selectedModel, setSelectedModel] = useState(preselectedProduct?.id || 'all')
   const [status, setStatus] = useState(null) // null | 'sending' | 'ok' | 'err'
 
@@ -19,14 +49,50 @@ export default function LeadForm({ lang, t, preselectedProduct }) {
   }, [preselectedProduct])
 
   const handlePhoneChange = (e) => {
-    let val = e.target.value
-    // If empty and user types, ensure +998 start if desired, or keep raw
-    setPhone(val)
+    const rawVal = e.target.value
+    // If input is emptied or only prefix fragment remains, reset to '+998 '
+    if (!rawVal || rawVal.trim() === '+' || rawVal.trim() === '+99' || rawVal.trim() === '+998') {
+      setPhone('+998 ')
+      setPhoneError(false)
+      return
+    }
+
+    const formatted = formatUzPhone(rawVal)
+    setPhone(formatted)
+
+    const digitsOnly = formatted.replace(/\D/g, '').replace(/^998/, '')
+    if (digitsOnly.length === 9) {
+      setPhoneError(false)
+    }
+  }
+
+  const handlePhoneKeyDown = (e) => {
+    // Prevent deleting the '+998 ' prefix with backspace or delete
+    if (
+      (e.key === 'Backspace' || e.key === 'Delete') &&
+      e.target.selectionStart <= 5 &&
+      e.target.selectionEnd <= 5
+    ) {
+      e.preventDefault()
+    }
+  }
+
+  const handlePhoneFocus = () => {
+    if (!phone || phone.trim() === '+998') {
+      setPhone('+998 ')
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!name.trim() || !phone.trim()) return
+    const digitsOnly = phone.replace(/\D/g, '').replace(/^998/, '')
+    if (digitsOnly.length < 9) {
+      setPhoneError(true)
+      document.getElementById('fphone')?.focus()
+      return
+    }
+
+    if (!name.trim()) return
 
     setStatus('sending')
 
@@ -61,14 +127,14 @@ export default function LeadForm({ lang, t, preselectedProduct }) {
 
       setStatus('ok')
       setName('')
-      setPhone('')
+      setPhone('+998 ')
     } catch (err) {
       console.warn('Form submission notice:', err)
       // If token not set or network blocked, show friendly confirmation in demo mode or error
       if (!TELEGRAM_BOT_TOKEN) {
         setStatus('ok')
         setName('')
-        setPhone('')
+        setPhone('+998 ')
       } else {
         setStatus('err')
       }
@@ -145,12 +211,23 @@ export default function LeadForm({ lang, t, preselectedProduct }) {
               <input
                 type="tel"
                 id="fphone"
-                className="form-input"
+                className={`form-input ${phoneError ? 'input-has-error' : ''}`}
                 value={phone}
                 onChange={handlePhoneChange}
-                placeholder={t.form.placeholderPhone}
+                onKeyDown={handlePhoneKeyDown}
+                onFocus={handlePhoneFocus}
+                placeholder="+998 90 123 45 67"
+                inputMode="numeric"
+                autoComplete="tel"
                 required
               />
+              {phoneError && (
+                <span className="field-error-msg">
+                  {lang === 'ru'
+                    ? 'Номер должен состоять из 9 цифр (+998 XX XXX XX XX)'
+                    : 'Raqam 9 ta sondan iborat bo‘lishi kerak (+998 XX XXX XX XX)'}
+                </span>
+              )}
             </div>
 
             {/* Submit CTA */}

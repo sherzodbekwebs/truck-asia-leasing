@@ -1474,6 +1474,18 @@ input, select {
   color: var(--slate-600);
 }
 
+.input-has-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+.field-error-msg {
+  font-size: 11.5px;
+  color: #dc2626;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
 .form-alert {
   display: flex;
   align-items: center;
