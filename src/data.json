@@ -1,0 +1,240 @@
+{
+    "mini_truck": {
+        "models": [
+            {
+                "type": "Мини-грузовик",
+                "model": "JAC X200 (бортовой)",
+                "modification": "JAC X200",
+                "modification_codes": [
+                    "W5082",
+                    "W5082CNG",
+                    "W5082LPG"
+                ],
+                "image": "/jacbortavoy.png",
+                "main_indicators": {
+                    "category": "N1",
+                    "body": "бортовой",
+                    "colors": [
+                        "белый"
+                    ],
+                    "seats": 2
+                },
+                "dimensions": {
+                    "length_width_height_mm": "5190×1750×1945",
+                    "length_width_height_side_mm": "3110×1650×355",
+                    "wheelbase_mm": 2640,
+                    "track_front_rear_mm": "1485/1320",
+                    "overhang_front_rear_mm": "1210/1340",
+                    "ground_clearance_mm": 129,
+                    "approach_departure_angle_deg": "17°/18°"
+                },
+                "weights": {
+                    "chassis": {
+                        "curb_weight_kg": 1535,
+                        "payload_kg": 2080
+                    },
+                    "vehicle": {
+                        "curb_weight_kg": {
+                            "W5082": 1750,
+                            "W5082CNG": 1990,
+                            "W5082LPG": 1820
+                        },
+                        "payload_kg": {
+                            "W5082": 1740,
+                            "W5082CNG": 1500,
+                            "W5082LPG": 1670
+                        },
+                        "gross_vehicle_weight_kg": 3490,
+                        "weight_distribution_with_load_front_rear_kg": "1345/2145"
+                    }
+                },
+                "engine": {
+                    "model": "HFC4GA3-3D",
+                    "type": "атмосферный",
+                    "fuel_type_grade": {
+                        "W5082": "Бензин (АИ-91, 92)",
+                        "W5082CNG": "Метан / Бензин",
+                        "W5082LPG": "Пропан / Бензин"
+                    },
+                    "modification_notes": {
+                        "W5082": "модель на бензине",
+                        "W5082CNG": "модель на бензине на метане",
+                        "W5082LPG": "модель на бензине на пропане"
+                    },
+                    "fuel_supply": "бензина инжектор (EFI)",
+                    "gas_fuel_system": "газовая BRC ALBA 32 (Италия)",
+                    "ecological_class": "Евро-5",
+                    "volume_cm3_l": "1997 (2.0)",
+                    "power_hp_kw_rpm": "147 / 108 / 6600",
+                    "torque_nm_rpm": "190/3000-4500"
+                },
+                "transmission": {
+                    "gearbox_type": "LC5T80B5 ступенчатая",
+                    "drive_type": "задний",
+                    "clutch": {
+                        "type": "сухое однодисковое",
+                        "diameter_mm": 230
+                    }
+                },
+                "suspension": {
+                    "front": "независимая, пружинная",
+                    "rear": "рессорная"
+                },
+                "brake_system": {
+                    "front": "дисковые",
+                    "rear": "барабанные"
+                },
+                "tires": {
+                    "front": "195/70R15C",
+                    "rear": "155R13C (сдвоенные)"
+                },
+                "fuel_reserve": {
+                    "fuel_tank_capacity_l": {
+                        "W5082": 65,
+                        "W5082CNG": 65,
+                        "W5082LPG": 65
+                    },
+                    "gas_cylinder_capacity_l": {
+                        "W5082": null,
+                        "W5082CNG": "180 (100+80)",
+                        "W5082LPG": 65
+                    }
+                },
+                "maneuverability": {
+                    "max_speed_kmh": 110,
+                    "min_turning_radius_m": 5.75
+                },
+                "comfort": {
+                    "air_conditioner": true,
+                    "cabin_heater": true,
+                    "power_windows": true,
+                    "power_steering": true,
+                    "front_rear_mudflaps": true,
+                    "wheel_type": "штампованные",
+                    "spare_wheel_full_size": true
+                },
+                "safety": {
+                    "seat_belts_count": 2,
+                    "seat_belt_reminder": true,
+                    "airbags": false,
+                    "anti_theft_system": true,
+                    "abs": true,
+                    "central_lock": true
+                },
+                "visibility": {
+                    "rear_view_mirror": true,
+                    "fog_lights": true,
+                    "headlight_height_adjustment": true
+                },
+                "interior": {
+                    "upholstery_color": "черный"
+                },
+                "multimedia": {
+                    "radio_mp3_speakers": true,
+                    "usb_12v_socket_120w": true
+                }
+            },
+            {
+                "type": "Мини-грузовик",
+                "model": "JAC X200 (промтоварный)",
+                "modification": "JAC X200 – W5082PT",
+                "modification_codes": [
+                    "W5082PT"
+                ],
+                "image": "/jacpromtavarniy.png",
+                "main_indicators": {
+                    "category": "N1",
+                    "body": "промтоварный",
+                    "colors": [
+                        "белый"
+                    ],
+                    "seats": 2
+                },
+                "dimensions": {
+                    "length_width_height_mm": "5190×1760×2610",
+                    "length_width_height_body_mm": "3220×1760×1760",
+                    "wheelbase_mm": 2640,
+                    "track_front_rear_mm": "1485/1320",
+                    "overhang_front_rear_mm": "1210/1340",
+                    "ground_clearance_mm": 129,
+                    "approach_departure_angle_deg": "17°/18°"
+                },
+                "weights": {
+                    "chassis": {
+                        "curb_weight_kg": 1420,
+                        "payload_kg": 2080
+                    },
+                    "vehicle": {
+                        "curb_weight_kg": 1780,
+                        "payload_kg": 1720,
+                        "gross_vehicle_weight_kg": 3500,
+                        "weight_distribution_with_load_front_rear_kg": "1345/2145"
+                    }
+                },
+                "engine": {
+                    "model": "HFC4GA3-3D",
+                    "type": "атмосферный",
+                    "fuel_type_grade": "бензин (АИ-91, АИ-92)",
+                    "fuel_supply": "инжектор (EFI)",
+                    "ecological_class": "Евро-5",
+                    "volume_cm3_l": "1997 (2.0)",
+                    "power_hp_kw_rpm": "147 / 108 / 6600"
+                },
+                "transmission": {
+                    "gearbox_type": "LC5T80B 5 ступенчатая",
+                    "drive_type": "задний",
+                    "clutch": {
+                        "type": "сухое однодисковое",
+                        "diameter_mm": 230
+                    }
+                },
+                "suspension": {
+                    "front": "независимая, пружинная",
+                    "rear": "рессорная"
+                },
+                "brake_system": {
+                    "front": "дисковые",
+                    "rear": "барабанные"
+                },
+                "tires": {
+                    "front": "195/70R15C",
+                    "rear": "155R13C (сдвоенные)"
+                },
+                "parameters_and_fuel": {
+                    "max_speed_kmh": 110,
+                    "fuel_tank_capacity_l": 65,
+                    "min_turning_radius_m": 5.75
+                },
+                "comfort": {
+                    "air_conditioner": true,
+                    "cabin_heater": true,
+                    "power_windows": true,
+                    "power_steering": true,
+                    "front_rear_mudflaps": true,
+                    "wheel_type": "штампованные",
+                    "spare_wheel_full_size": true
+                },
+                "safety": {
+                    "seat_belts_count": 2,
+                    "seat_belt_reminder": true,
+                    "airbags": false,
+                    "anti_theft_system": true,
+                    "abs": true,
+                    "central_lock": true
+                },
+                "visibility": {
+                    "rear_view_mirror": true,
+                    "fog_lights": true,
+                    "headlight_height_adjustment": true
+                },
+                "interior": {
+                    "upholstery_color": "черный"
+                },
+                "multimedia": {
+                    "radio_mp3_speakers": true,
+                    "usb_12v_socket_120w": true
+                }
+            }
+        ]
+    }
+}
