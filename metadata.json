@@ -1,0 +1,8 @@
+{
+  "name": "Truck Asia Leasing",
+  "description": "JAC texnikasini lizingga oling — Truck Asia Leasing rasmiy diler va lizing xizmati",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

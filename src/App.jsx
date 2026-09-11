@@ -1,99 +1,185 @@
-import { useState } from 'react'
-import Header from './components/Header.jsx'
+import { useState, useEffect } from 'react'
+import Header, { PHONE_DISPLAY, PHONE_HREF } from './components/Header.jsx'
 import ProductCard from './components/ProductCard.jsx'
 import Modal from './components/Modal.jsx'
 import LeadForm from './components/LeadForm.jsx'
-import { PHONE_DISPLAY, PHONE_HREF } from './components/Header.jsx'
-import { products } from './data/products.js'
+import { translations } from './translations.js'
+import { PRODUCTS_CONFIG } from './data/products.js'
+import { ArrowRight, CheckCircle2, Phone, Sparkles } from 'lucide-react'
 import './App.css'
 
 export default function App() {
-  const [modal, setModal] = useState(null) // { type: 'spec' | 'lease', product }
+  // Default language is 'uz', with persistence in localStorage
+  const [lang, setLang] = useState(() => {
+    return localStorage.getItem('tal_lang') || 'uz'
+  })
+
+  const [modal, setModal] = useState(null) // null | { type: 'specs' | 'lease', product }
+  const [preselectedProduct, setPreselectedProduct] = useState(null)
+
+  useEffect(() => {
+    localStorage.setItem('tal_lang', lang)
+    document.documentElement.lang = lang
+  }, [lang])
+
+  const t = translations[lang] || translations.uz
 
   const closeModal = () => setModal(null)
 
-  const goToForm = () => {
-    closeModal()
+  const handleSelectForOrder = (product) => {
+    setPreselectedProduct(product)
+    if (modal) closeModal()
     requestAnimationFrame(() => {
-      document.getElementById('fname')?.focus()
-      document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      const formEl = document.getElementById('lead-form')
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        setTimeout(() => {
+          document.getElementById('fname')?.focus()
+        }, 400)
+      }
     })
   }
 
   return (
-    <>
-      <Header />
+    <div className="app-layout">
+      {/* Top bar & Navigation Header */}
+      <Header lang={lang} setLang={setLang} t={t} />
 
-      <section className="intro">
-        <h1>JAC texnikasini qulay lizing shartlarida oling</h1>
-        <p>
-          Truck Asia Leasing orqali rasmiy JAC texnikasini 50% avans to'lovi va
-          qolgan qismini kuniga 300 000 so'mdan 13 oy davomida to'lash imkoniyati bilan
-          rasmiylashtiring.
-        </p>
-      </section>
+      <main className="main-content">
+        {/* HERO SECTION */}
+        <section className="hero-section">
+          <div className="hero-container">
+            <div className="hero-badge-wrap">
+              <span className="hero-badge">
+                <Sparkles size={14} className="badge-sparkle" />
+                {t.hero.badge}
+              </span>
+            </div>
 
-      <section className="cards">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onOpenSpec={(p) => setModal({ type: 'spec', product: p })}
-            onOpenLease={(p) => setModal({ type: 'lease', product: p })}
-          />
-        ))}
-      </section>
+            <h1 className="hero-title">{t.hero.title}</h1>
+            <p className="hero-subtitle">{t.hero.subtitle}</p>
 
-      <LeadForm />
+            <div className="hero-cta-group">
+              <button
+                type="button"
+                className="btn-hero-primary"
+                onClick={() => {
+                  document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('fname')?.focus()
+                }}
+              >
+                <span>{t.hero.ctaButton}</span>
+                <ArrowRight size={17} />
+              </button>
 
-      <footer>
-        JAC &middot; Truck Asia Leasing — rasmiy diler va lizing xizmati
-        <br />
-        Call-markaz: <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
+              <button
+                type="button"
+                className="btn-hero-secondary"
+                onClick={() => {
+                  document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                <span>{t.hero.viewModels}</span>
+              </button>
+            </div>
+
+            {/* Hero Key Advantages Bento Grid */}
+            <div className="advantages-grid" id="advantages-section">
+              {t.hero.advantages.map((item, idx) => (
+                <div className={`advantage-card card-accent-${idx + 1}`} key={item.title}>
+                  <div className="adv-number-wrap">
+                    <span className="adv-number">{item.num}</span>
+                    {item.unit && <span className="adv-unit">{item.unit}</span>}
+                  </div>
+                  <h3 className="adv-title">{item.title}</h3>
+                  <p className="adv-desc">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CATALOG SECTION */}
+        <section className="catalog-section" id="catalog-section">
+          <div className="catalog-container">
+            <div className="section-header-center">
+              <span className="section-pill">{lang === 'ru' ? 'Модельный ряд' : 'Modellar qatori'}</span>
+              <h2 className="section-title">{t.catalog.heading}</h2>
+              <p className="section-subtitle">{t.catalog.subheading}</p>
+            </div>
+
+            <div className="cards-grid">
+              {PRODUCTS_CONFIG.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  lang={lang}
+                  t={t}
+                  onOpenSpec={(p) => setModal({ type: 'specs', product: p })}
+                  onOpenLease={(p) => setModal({ type: 'lease', product: p })}
+                  onSelectForOrder={handleSelectForOrder}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* LEAD FORM APPLICATION SECTION */}
+        <LeadForm lang={lang} t={t} preselectedProduct={preselectedProduct} />
+      </main>
+
+      {/* FOOTER */}
+      <footer className="main-footer">
+        <div className="footer-container">
+          <div className="footer-top-row">
+            <div className="footer-brand">
+              <div className="footer-logos">
+                <img src="/jac.png" alt="JAC Motors" className="footer-logo jac" />
+                <div className="footer-logo-divider" />
+                <img src="/tal.png" alt="Truck Asia Leasing" className="footer-logo tal" />
+              </div>
+              <p className="footer-brand-text">{t.footer.copyright}</p>
+            </div>
+
+            <div className="footer-contact-block">
+              <span className="footer-contact-title">{t.footer.callCenter}</span>
+              <a href={PHONE_HREF} className="footer-phone">
+                <Phone size={16} />
+                {PHONE_DISPLAY}
+              </a>
+              <span className="footer-hours">{t.topBar.workHours}</span>
+            </div>
+          </div>
+
+          <div className="footer-bottom-row">
+            <p className="footer-legal">
+              &copy; {new Date().getFullYear()} Truck Asia Leasing &middot; {t.footer.allRights}
+            </p>
+            <div className="footer-tags">
+              <span className="legal-tag">
+                <CheckCircle2 size={13} />
+                {lang === 'ru' ? 'Официальная гарантия' : 'Rasmiy kafolat'}
+              </span>
+              <span className="legal-tag">
+                <CheckCircle2 size={13} />
+                {lang === 'ru' ? 'Сервисная поддержка' : 'Servis xizmati'}
+              </span>
+            </div>
+          </div>
+        </div>
       </footer>
 
-      {modal?.type === 'spec' && (
-        <Modal title={modal.product.fullTitle} subtitle="To'liq texnik tavsif" onClose={closeModal}>
-          <table className="spec-table">
-            <tbody>
-              {modal.product.quickSpecs.map((row) => (
-                <tr key={row.label}>
-                  <td>{row.label}</td>
-                  <td>{row.value}</td>
-                </tr>
-              ))}
-              {modal.product.extraSpecs.map((row) => (
-                <tr key={row.label}>
-                  <td>{row.label}</td>
-                  <td>{row.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Modal>
-      )}
-
-      {modal?.type === 'lease' && (
+      {/* ENLARGED & MODERN MODAL */}
+      {modal && (
         <Modal
-          title={`${modal.product.fullTitle} — leasing shartlari`}
-          subtitle="Truck Asia Leasing orqali rasmiylashtirish"
+          type={modal.type}
+          product={modal.product}
+          lang={lang}
+          t={t}
           onClose={closeModal}
-        >
-          <ul className="terms-list">
-            {modal.product.leasing.items.map((row) => (
-              <li key={row.label}>
-                <span>{row.label}</span>
-                <span>{row.value}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="cta-row">
-            <button className="btn" onClick={goToForm}>
-              Ariza qoldirish
-            </button>
-          </div>
-        </Modal>
+          onOrder={handleSelectForOrder}
+        />
       )}
-    </>
+    </div>
   )
 }
