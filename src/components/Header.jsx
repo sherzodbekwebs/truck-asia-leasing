@@ -61,7 +61,7 @@ export default function Header({ lang, setLang, t }) {
 
             {/* Truck Asia Leasing Logo */}
             <div className="brand-item tal-brand">
-              <img src="/tal.png" alt="Truck Asia Leasing" className="logo-img tal-logo" />
+              <img src="/tal_top.png" alt="Truck Asia Leasing" className="logo-img tal-logo" />
             </div>
           </div>
 
